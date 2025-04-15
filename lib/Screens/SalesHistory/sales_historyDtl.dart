@@ -1,11 +1,15 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables, prefer_final_fields, unused_local_variable, prefer_typing_uninitialized_variables, sized_box_for_whitespace, unnecessary_null_comparison, unnecessary_new
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // import '../../HTTP Post&Get/post_get.dart';
 import '../../constant.dart';
 import '../../model/sales_history_dtl.dart';
+import '../../model/sales_history_hdr.dart';
+import '../../model/search_serial.dart';
 import '../Sales/loading_dialog.dart';
 // import '../loading_dialog.dart';
 
@@ -19,7 +23,7 @@ class SalesHistoryDTL extends StatefulWidget {
 }
 
 class _SalesHistoryDTLState extends State<SalesHistoryDTL> {
-  SalesHistoryDtl _gets = new SalesHistoryDtl();
+  SalesHistoryHdr _gets = new SalesHistoryHdr();
   @override
   void initState() {
     // getSalesHistoryDTLList(context, shistoryDtlId).then((value) {
@@ -27,6 +31,8 @@ class _SalesHistoryDTLState extends State<SalesHistoryDTL> {
     //     _gets = (value);
     //   });
     // });
+    _gets = shistoryDtlId;
+    print(jsonEncode(shistoryDtlId));
     super.initState();
   }
 
@@ -47,7 +53,7 @@ class _SalesHistoryDTLState extends State<SalesHistoryDTL> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: _gets.id != null
+        child: _gets.pk != null
             ? Column(
                 children: [
                   Center(
@@ -76,9 +82,9 @@ class _SalesHistoryDTLState extends State<SalesHistoryDTL> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Харилцагчийн нэр: "),
+                            Text("Хүлээлгэн өгсөн: "),
                             Text(
-                              _gets.customerId![1].toString(),
+                              _gets.infoOutSector!.toString(),
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
@@ -97,30 +103,9 @@ class _SalesHistoryDTLState extends State<SalesHistoryDTL> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Төлбөрийн хэлбэр: "),
+                            Text("Хүлээн авсан:"),
                             Text(
-                              _gets.paymentId![1].toString(),
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8, right: 8),
-                    child: Card(
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        height: 50,
-                        width: size.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Хүлээлгэж өгсөн:"),
-                            Text(
-                              _gets.delivered.toString(),
+                              _gets.infoToSector.toString(),
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
@@ -141,7 +126,28 @@ class _SalesHistoryDTLState extends State<SalesHistoryDTL> {
                           children: [
                             Text("Тэмдэглэл: "),
                             Text(
-                              _gets.note.toString(),
+                              _gets.description.toString(),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 8),
+                    child: Card(
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        height: 50,
+                        width: size.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Нийт Үнэ: "),
+                            Text(
+                              _gets.totalPrice.toString(),
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
@@ -165,29 +171,29 @@ class _SalesHistoryDTLState extends State<SalesHistoryDTL> {
                       child: Column(
                         children: [
                           Container(
-                              width: double.infinity,
-                              decoration: const BoxDecoration(
-                                color: Color(0xffEAEFFA),
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10)),
+                            width: double.infinity,
+                            decoration: const BoxDecoration(
+                              color: Color(0xffEAEFFA),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10)),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Text(
+                                'Хүлээлгэн өгсөн бараа',
+                                style: TextStyle(fontSize: 16),
                               ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Text(
-                                  'Худалдан авсан бараа',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              )),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: _gets.details?.length,
+                            ),
+                          ),
+                          // ЭНЭ ХЭСГИЙГ EXPANDED БОЛГОНО
+                          Expanded(
+                            child: ListView.builder(
+                              physics:
+                                  BouncingScrollPhysics(), // эсвэл AlwaysScrollableScrollPhysics()
+                              itemCount: _gets.historyProducts?.length ?? 0,
                               itemBuilder: (context, index) {
                                 return ListTile(
-                                  onTap: () {
-                                    // getCustomer = _gets[index];
-                                    // Navigator.pop(context);
-                                  },
                                   title: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -196,40 +202,53 @@ class _SalesHistoryDTLState extends State<SalesHistoryDTL> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
+                                          Text("Барааны код №:",
+                                              style: TextStyle(fontSize: 14)),
                                           Text(
-                                            "Сериал №:",
-                                            style:
-                                                const TextStyle(fontSize: 14),
-                                          ),
-                                          Text(
-                                            _gets.details![index].serialId![1]
+                                            _gets.historyProducts![index]
+                                                .product!.itemCode
                                                 .toString(),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 10),
+                                      SizedBox(height: 10),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
+                                          Text("Барааны нэр:",
+                                              style: TextStyle(fontSize: 14)),
                                           Text(
-                                            "Барааны нэр:",
-                                            style:
-                                                const TextStyle(fontSize: 14),
-                                          ),
-                                          Text(
-                                            _gets.details![index].product![1]
+                                            _gets.historyProducts![index]
+                                                .product!.itemName
                                                 .toString(),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 5),
+                                      SizedBox(height: 5),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("Тоо/ш:",
+                                              style: TextStyle(fontSize: 14)),
+                                          Text(
+                                            _gets.historyProducts![index]
+                                                .quantity
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 5),
                                       Container(
                                         height: 1.5,
                                         width: double.infinity,
@@ -238,7 +257,9 @@ class _SalesHistoryDTLState extends State<SalesHistoryDTL> {
                                     ],
                                   ),
                                 );
-                              }),
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     ),

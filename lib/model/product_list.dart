@@ -1,36 +1,40 @@
 class ProductListModel {
-  int? id;
-  String? name;
-  String? accountCode;
-  String? note;
-  String? createDate;
-  String? writeDate;
+  int? pk;
+  String? itemCode;
+  String? itemName;
+  String? itemBillName;
+  String? itemPrice;
+  bool? isActive;
+  String? createdDate;
 
   ProductListModel(
-      {this.id,
-      this.name,
-      this.accountCode,
-      this.note,
-      this.createDate,
-      this.writeDate});
+      {this.pk,
+      this.itemCode,
+      this.itemName,
+      this.itemBillName,
+      this.itemPrice,
+      this.isActive,
+      this.createdDate});
 
   ProductListModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'].toString();
-    accountCode = json['account_code'].toString();
-    note = json['note'].toString();
-    createDate = json['create_date'].toString();
-    writeDate = json['write_date'].toString();
+    pk = json['pk'];
+    itemCode = json['itemCode'];
+    itemName = json['itemName'];
+    itemBillName = json['itemBillName'];
+    itemPrice = json['itemPrice'];
+    isActive = json['isActive'];
+    createdDate = json['createdDate'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = id;
-    data['name'] = name;
-    data['account_code'] = accountCode;
-    data['note'] = note;
-    data['create_date'] = createDate;
-    data['write_date'] = writeDate;
+    data['pk'] = this.pk;
+    data['itemCode'] = this.itemCode;
+    data['itemName'] = this.itemName;
+    data['itemBillName'] = this.itemBillName;
+    data['itemPrice'] = this.itemPrice;
+    data['isActive'] = this.isActive;
+    data['createdDate'] = this.createdDate;
     return data;
   }
 }

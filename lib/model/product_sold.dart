@@ -1,34 +1,67 @@
-// ignore_for_file: unnecessary_this
-
 class ProductSold {
-  int? customerId;
-  int? paymentId;
-  String? delivered;
-  String? note;
-  List<int>? details;
+  int? userPk;
+  int? infoOutSector;
+  int? infoToSector;
+  double? totalPrice;
+  String? description;
+  bool? isIncome;
+  List<HistoryProducts>? historyProducts;
 
   ProductSold(
-      {this.customerId,
-      this.paymentId,
-      this.delivered,
-      this.note,
-      this.details});
+      {this.userPk,
+      this.infoOutSector,
+      this.infoToSector,
+      this.totalPrice,
+      this.description,
+      this.isIncome,
+      this.historyProducts});
 
   ProductSold.fromJson(Map<String, dynamic> json) {
-    customerId = json['customer_id'];
-    paymentId = json['payment_id'];
-    delivered = json['delivered'];
-    note = json['note'];
-    details = json['details'].cast<int>();
+    userPk = json['UserPk'];
+    infoOutSector = json['infoOutSector'];
+    infoToSector = json['infoToSector'];
+    totalPrice = json['totalPrice'];
+    description = json['description'];
+    isIncome = json['isIncome'];
+    if (json['history_products'] != null) {
+      historyProducts = <HistoryProducts>[];
+      json['history_products'].forEach((v) {
+        historyProducts!.add(new HistoryProducts.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['customer_id'] = this.customerId;
-    data['payment_id'] = this.paymentId;
-    data['delivered'] = this.delivered;
-    data['note'] = this.note;
-    data['details'] = this.details;
+    data['UserPk'] = this.userPk;
+    data['infoOutSector'] = this.infoOutSector;
+    data['infoToSector'] = this.infoToSector;
+    data['totalPrice'] = this.totalPrice;
+    data['description'] = this.description;
+    data['isIncome'] = this.isIncome;
+    if (this.historyProducts != null) {
+      data['history_products'] =
+          this.historyProducts!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class HistoryProducts {
+  int? product;
+  double? quantity;
+
+  HistoryProducts({this.product, this.quantity});
+
+  HistoryProducts.fromJson(Map<String, dynamic> json) {
+    product = json['product'];
+    quantity = json['quantity'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['product'] = this.product;
+    data['quantity'] = this.quantity;
     return data;
   }
 }

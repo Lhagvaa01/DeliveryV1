@@ -7,11 +7,13 @@ import 'package:hive/hive.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../../GlobalComponents/login_background.dart';
 // import '../../HTTP Post&Get/post_get.dart';
+import '../../HTTP Post&Get/post_get.dart';
 import '../../Home/home.dart';
 import '../../constant.dart';
+import '../../model/login_body.dart';
 // import '../../model/login_body.dart';
 // import '../Home/home.dart';
-// import '../loading_dialog.dart';
+import '../loading_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -26,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool isLoading = false;
 
-  // var loginBody = LoginBody();
+  var loginBody = LoginBody();
 
   @override
   void initState() {
@@ -42,32 +44,32 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   LoginValidate() {
-    // loginBody = LoginBody(
-    //   username: username.text,
-    //   password: passcode.text,
-    // );
+    loginBody = LoginBody(
+      username: username.text,
+      password: passcode.text,
+    );
 
-    Home().launch(context);
-    isLoading = false;
-    // postLoginCheck(context, jsonEncode(loginBody)).then((value) {
-    //   setState(() {
-    //     if (value.status == "ok") {
-    //       Home().launch(context);
-    //       isLoading = false;
-    //       SaveNamePass();
-    //     } else {
-    //       isLoading = false;
-    //       ScaffoldMessenger.of(context).showSnackBar(
-    //         SnackBar(
-    //           content: Text(
-    //             "Бүртгэлгүй эсвэл нууц үг буруу!",
-    //           ),
-    //           backgroundColor: Colors.orange,
-    //         ),
-    //       );
-    //     }
-    //   });
-    // });
+    // Home().launch(context);
+    // isLoading = false;
+    postLoginCheck(context, jsonEncode(loginBody)).then((value) {
+      setState(() {
+        if (value.message == "Login successful") {
+          Home().launch(context);
+          isLoading = false;
+          SaveNamePass();
+        } else {
+          isLoading = false;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                "Бүртгэлгүй эсвэл нууц үг буруу!",
+              ),
+              backgroundColor: Colors.orange,
+            ),
+          );
+        }
+      });
+    });
   }
 
   SaveNamePass() {
@@ -94,8 +96,8 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(horizontal: 40),
-              child: Image.asset("images/Kacc.mn Logo.png",
-                  width: size.width * 0.5),
+              child:
+                  Image.asset("images/login/Logo.png", width: size.width * 0.5),
             ),
             SizedBox(height: size.height * 0.03),
             Container(
@@ -185,11 +187,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            // isLoading
-            //     ? Container(
-            //         child: LoadingIndicator(text: " Түр хүлээнэ үү.... "),
-            //       )
-            //     : Container(),
+            isLoading
+                ? Container(
+                    child: LoadingIndicator(text: " Түр хүлээнэ үү.... "),
+                  )
+                : Container(),
           ],
         ),
       ),

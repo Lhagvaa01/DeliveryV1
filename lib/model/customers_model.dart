@@ -1,31 +1,40 @@
 class CustomersListModel {
-  int? id;
-  String? ttd;
+  int? pk;
+  String? sectorId;
   String? name;
-  String? mobile;
-  String? email;
-  String? facebook;
-  String? createDate;
-  String? writeDate;
+  bool? isMain;
+  String? address;
+  String? phone;
+  String? createdDate;
 
   CustomersListModel(
-      {this.id,
-      this.ttd,
+      {this.pk,
+      this.sectorId,
       this.name,
-      this.mobile,
-      this.email,
-      this.facebook,
-      this.createDate,
-      this.writeDate});
+      this.isMain,
+      this.address,
+      this.phone,
+      this.createdDate});
 
   CustomersListModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    ttd = json['ttd'].toString();
-    name = json['name'].toString();
-    mobile = json['mobile'].toString();
-    email = json['email'].toString();
-    facebook = json['facebook'].toString();
-    createDate = json['create_date'];
-    writeDate = json['write_date'];
+    pk = json['pk'];
+    sectorId = json['sectorId'];
+    name = json['name'];
+    isMain = json['isMain'];
+    address = json['address'];
+    phone = json['phone'];
+    createdDate = json['createdDate'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['pk'] = this.pk;
+    data['sectorId'] = this.sectorId;
+    data['name'] = this.name;
+    data['isMain'] = this.isMain;
+    data['address'] = this.address;
+    data['phone'] = this.phone;
+    data['createdDate'] = this.createdDate;
+    return data;
   }
 }

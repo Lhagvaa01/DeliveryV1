@@ -29,7 +29,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
 
   @override
   initState() {
-    dropdownValue = loginInfo.surname.toString();
+    dropdownValue = loginInfo.user!.username.toString();
     super.initState();
   }
 
@@ -98,10 +98,10 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: AppTextField(
-                    initialValue: loginInfo.name,
+                    initialValue: loginInfo.user!.username,
                     onChanged: (value) {
                       setState(() {
-                        loginInfo.name = value;
+                        loginInfo.user!.username = value;
                       });
                     }, // Optional
                     textFieldType: TextFieldType.NAME,
@@ -112,25 +112,10 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: AppTextField(
-                    initialValue: loginInfo.phone,
+                    initialValue: loginInfo.user!.email,
                     onChanged: (value) {
                       setState(() {
-                        loginInfo.phone = value;
-                      });
-                    }, // Optional
-                    textFieldType: TextFieldType.NUMBER,
-                    decoration: const InputDecoration(
-                        labelText: 'Утасны дугаар',
-                        border: OutlineInputBorder()),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: AppTextField(
-                    initialValue: loginInfo.email,
-                    onChanged: (value) {
-                      setState(() {
-                        loginInfo.email = value;
+                        loginInfo.user!.email = value;
                       });
                     }, // Optional
                     textFieldType: TextFieldType.NAME,

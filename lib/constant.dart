@@ -1,9 +1,12 @@
+import 'package:bluetooth_print/bluetooth_print_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'model/customers_model.dart';
-import 'model/login_info.dart';
+import 'model/UserInfo.dart';
 import 'model/payment_list.dart';
+import 'model/sales_history_hdr.dart';
+import 'model/search_serial.dart';
 
 // const kMainColor = Color(0xFF3F8CFF);
 const kMainColor = Color(0xFF01aded);
@@ -11,12 +14,13 @@ const kGreyTextColor = Color(0xFF828282);
 const kBorderColorTextField = Color(0xFFC2C2C2);
 const kDarkWhite = Color(0xFFF1F7F7);
 
-LoginInfo loginInfo = LoginInfo();
+UserInfo loginInfo = UserInfo();
 
 List<String> paymentsTypeList = ['Буцаалт', 'Солилт'];
 
 List<PaymentList> getPaymentLists = <PaymentList>[];
 CustomersListModel getCustomer = CustomersListModel();
+SearchSerial getProduct = SearchSerial();
 
 List<String> dropdownValues = ['Cash', 'Card', 'Check', 'Mobile Pay'];
 const kButtonDecoration = BoxDecoration(
@@ -28,7 +32,9 @@ const kButtonDecoration = BoxDecoration(
 String startDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
 String endDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
 
-String shistoryDtlId = "";
+SalesHistoryHdr shistoryDtlId = SalesHistoryHdr();
+List<SearchSerial> productList = [];
+List<CustomersListModel> customerList = [];
 String rHistoryDtlId = "";
 String aProductId = "";
 String aProductName = "";
@@ -122,3 +128,10 @@ List<String> profileGender = [
   'Эр',
   'Эм',
 ];
+
+Map<String, dynamic> configCons = Map();
+
+List<SearchSerial> salesProd = <SearchSerial>[];
+double totalPrice = 0.0;
+int customerId = 0;
+String descText = "";

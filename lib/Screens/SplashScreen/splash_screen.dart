@@ -6,6 +6,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // import '../../Auth/login.dart';
+import '../../HTTP Post&Get/post_get.dart';
 import '../../Home/home.dart';
 import '../Auth/login.dart';
 
@@ -18,25 +19,49 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // void getPermission() async{
-  //   // ignore: unused_local_variable
-  //   Map<Permission, PermissionStatus> statuses = await [
-  //     Permission.bluetoothScan,
-  //     Permission.bluetoothConnect,
-  //   ].request();
-  // }
+  // bool wait = true;
 
   @override
   void initState() {
     super.initState();
-    init();
+    // init();
+    getData();
     // getPermission();
+  }
+
+  getData() {
+    getProductsList(context).then((value) {
+      setState(() {
+        if (value.isNotEmpty) {
+          productList = value;
+          // Navigator.pop(context);
+          // LoginScreen().launch(context);
+          // defaultBlurRadius = 10.0;
+          // defaultSpreadRadius = 0.5;
+        } else {
+          // wait = !wait;
+        }
+        getSeactionList(context).then((value) {
+          setState(() {
+            if (value.isNotEmpty) {
+              customerList = value;
+              Navigator.pop(context);
+              LoginScreen().launch(context);
+              defaultBlurRadius = 10.0;
+              defaultSpreadRadius = 0.5;
+            } else {
+              // wait = !wait;
+            }
+          });
+        });
+      });
+    });
   }
 
   // var currentUser = FirebaseAuth.instance.currentUser;
 
   void init() async {
-    await Future.delayed(const Duration(seconds: 2), () {
+    await Future.delayed(const Duration(seconds: 3), () {
       // if (currentUser != null) {
       // const Home().launch(context);
       // } else {
@@ -67,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Image(
-                  image: AssetImage('images/Kacc.mn Logo.png'),
+                  image: AssetImage('images/login/Logo.png'),
                 ),
               ),
             ),
@@ -76,7 +101,7 @@ class _SplashScreenState extends State<SplashScreen> {
               children: [
                 Center(
                   child: Text(
-                    'Powered By KACC MALL LLC',
+                    'Тvгээлт - Падаан - Бvртгэл',
                     style: GoogleFonts.poppins(
                         color: Colors.white,
                         fontWeight: FontWeight.normal,
@@ -85,7 +110,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 Center(
                   child: Text(
-                    'V 1.0.0',
+                    'V 1.1.0',
                     style: GoogleFonts.poppins(
                         color: Colors.white,
                         fontWeight: FontWeight.normal,

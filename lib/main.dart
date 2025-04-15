@@ -46,12 +46,15 @@ import 'Screens/Auth/success_screen.dart';
 // import 'Screens/Sales/add_sales.dart';
 // import 'Screens/SalesHistory/sales_historyDtl.dart';
 // import 'Screens/SalesHistory/sales_historyHdr.dart';
+import 'Screens/Customers/customers_list.dart';
+import 'Screens/Products/product_list.dart';
 import 'Screens/Sales/add_sales.dart';
 import 'Screens/Sales/history_screens.dart';
 import 'Screens/SalesHistory/sales_historyDtl.dart';
 import 'Screens/SalesHistory/sales_historyHdr.dart';
 import 'Screens/SplashScreen/on_board.dart';
 import 'Screens/SplashScreen/splash_screen.dart';
+import 'Screens/print_page.dart';
 // import 'Screens/history_screens.dart';
 
 // import 'Screens/Authentication/profile_setup.dart';
@@ -71,6 +74,14 @@ void main() async {
     ),
   );
 }
+
+final List<Map<String, dynamic>> data = [
+  {'title': 'Cadbury Dairy Milk', 'price': 15, 'qty': 2},
+  {'title': 'Parle-G Gluco Biscut', 'price': 5, 'qty': 5},
+  {'title': 'Fresh Onion - 1KG', 'price': 20, 'qty': 1},
+  {'title': 'Fresh Sweet Lime', 'price': 20, 'qty': 5},
+  {'title': 'Maggi', 'price': 10, 'qty': 5},
+];
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -99,12 +110,12 @@ class MyApp extends StatelessWidget {
         // '/returnChange': (context) => ReturnChange(),
         // '/repairScreen': (context) => RepairScreen(),
 
-        // '/customersList': (context) => CustomersList(),
-        // '/newCustomer': (context) => NewCustomers(),
+        '/customersList': (context) => CustomersList(),
+        '/printPage': (context) => PrintPrice(),
         '/salesHistoryHDR': (context) => SalesHistoryHDR(),
         '/salesHistoryDTL': (context) => SalesHistoryDTL(),
         '/historyScreens': (context) => HistoryScreens(),
-        // '/repairHistoryHDR': (context) => RepairHistoryHDR(),
+        '/productsList': (context) => ProductsList(),
         // '/repairHistoryDTL': (context) => RepairHistoryDTL(),
 
         // '/profile': (context) => const ProfileScreen(),

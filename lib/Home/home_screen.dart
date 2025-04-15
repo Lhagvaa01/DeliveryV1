@@ -13,7 +13,7 @@ import 'package:deliery_app/constant.dart';
 // import 'package:serial_reg/model/personal_information_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../model/login_info.dart';
+import '../model/UserInfo.dart';
 import '../Screens/Profile Screen/profile_details.dart';
 import 'components/grid_items.dart';
 // import '../Profile Screen/profile_details.dart';
@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage(
-                                loginInfo.surname == "Эр"
+                                loginInfo.user!.gender == "M"
                                     ? loginImg[0]
                                     : loginImg[1],
                               ),
@@ -101,13 +101,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(
                       width: 15.0,
                     ),
-                    Text(
-                      loginInfo.name.toString(),
-                      style: GoogleFonts.poppins(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          loginInfo.user!.username.toString(),
+                          style: GoogleFonts.poppins(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          "Хувилбар: 9.16",
+                          style: GoogleFonts.poppins(
+                            fontSize: 10.0,
+                            color: Colors.black,
+                          ),
+                        )
+                      ],
                     ),
                     // const Spacer(),
                   ],

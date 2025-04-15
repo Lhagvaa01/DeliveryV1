@@ -14,7 +14,7 @@
     <uses-feature android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:required="false" />
 
     <application
-        android:label="deliery_app"
+        android:label="Түгээлт Падаан"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true"

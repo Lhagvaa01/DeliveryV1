@@ -52,6 +52,10 @@ dependencies:
   url_launcher: ^6.3.0
   country_code_picker: ^3.0.0
   rflutter_alert: ^2.0.7
+  bluetooth_print: ^4.3.0
+  flutter_esc_pos_utils: ^0.1.8
+  qr_flutter: ^4.1.0
+  oktoast: ^3.4.0
 
 dev_dependencies:
   flutter_test:
